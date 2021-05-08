@@ -2,6 +2,7 @@ package database
 
 import (
 	"github.com/jmoiron/sqlx"
+	_ "github.com/lib/pq"
 	"log"
 )
 
@@ -15,16 +16,19 @@ type DB struct {
 }
 
 func (d *DB) Open() error {
-	pg, err := sqlx.Open("postgres", "")
+	pg, err := sqlx.Open("postgres", pgConnStr)
 	if err != nil {
 		return err
 	}
 	log.Println("Connected to Database!")
+
+	pg.MustExec(createSchema)
+
 	d.db = pg
 
 	return nil
 }
 
 func (d *DB) Close() error {
-	return nil
+	return d.db.Close()
 }

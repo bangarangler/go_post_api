@@ -4,7 +4,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/hoho/godotenv"
+	"github.com/joho/godotenv"
 )
 
 func goDotEnvVar(key string) string {
