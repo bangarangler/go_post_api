@@ -1,20 +1,10 @@
 package app
 
 import (
-	// "fmt"
-	// "os"
 	"github.com/bangarangler/go_post_api/app/database"
-	"github.com/gorilla/mux"
-	// "github.com/hoho/godotenv"
-)
 
-// func goDotEnvVar(key string) string {
-// 	err := godotenv.Load("db.env")
-// 	if err != nil {
-// 		log.Fatalf("error loading env")
-// 	}
-// 	return os.Getenv(key)
-// }
+	"github.com/gorilla/mux"
+)
 
 type App struct {
 	Router *mux.Router
@@ -32,4 +22,5 @@ func New() *App {
 
 func (a *App) initRoutes() {
 	a.Router.HandleFunc("/", a.IndexHandler()).Methods("GET")
+	a.Router.HandleFunc("/api/posts", a.CreatePostHandler()).Methods("POST")
 }

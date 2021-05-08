@@ -1,14 +1,18 @@
 package database
 
 import (
+	"github.com/bangarangler/go_post_api/app/models"
+	"log"
+
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
-	"log"
 )
 
 type PostDB interface {
 	Open() error
 	Close() error
+	CreatePost(p *models.Post) error
+	GetPosts() ([]*models.Post, error)
 }
 
 type DB struct {
