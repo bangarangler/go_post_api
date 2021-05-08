@@ -41,3 +41,21 @@ func (a *App) CreatePostHandler() http.HandlerFunc {
 		sendResponse(w, r, resp, http.StatusOK)
 	}
 }
+
+func (a *App) GetPostHandler() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		posts, err := a.DB.GetPosts()
+		if err != nil {
+			log.Printf("Cannot get posts, err=%v \n", err)
+			sendResponse(w, r, nil, http.StatusInternalServerError)
+			return
+		}
+
+		var resp = make([]models.JSONPost, len(posts))
+		for idx, post := range posts {
+			resp[idx] = mapPostToJSON(post)
+		}
+
+		sendResponse(w, r, resp, http.StatusOK)
+	}
+}
